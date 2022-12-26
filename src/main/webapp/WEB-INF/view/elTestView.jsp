@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import = "controller.*" %>
 <%@ page import = "java.util.ArrayList" %>
 <!DOCTYPE html>
@@ -93,9 +94,92 @@
 		
 		<div>
 			EL은 값을 표현하는 방법이지 문(자바문장)은 표현할 수 없다.<br>
-			그래서 문을 태그처럼 표현하기 위해서 커스텀태그(태그라이브러리)인 JSTL을 사용한다.<br>
+			그래서 문을 태그처럼 표현하기 위해서 커스텀태그(태그 외부 라이브러리)인 JSTL을 사용한다.<br>
 			MVC에서는 JSTL 모두다를 사용하지는 않고 주로 Core단(제어문부문)부분만 사용한다. 
 		</div>
+		<div>
+			<h1>조건문</h1>
+			<div><!-- 자바코드 -->
+				<%
+					Member m2 = (Member)(request.getAttribute("member"));
+					if(m2.getAge() > 19) {
+				%>
+						<%=m2.getId()%>는 성인입니다.
+				<%
+					} else {
+				%>
+						<%=m2.getId()%>는 미성년자입니다.
+				<%
+					}
+				%>
+			</div>
+			<div> <!-- JSTL코드로 변경 -->
+				<c:if test="${member.age > 19}"> <!-- test = "자바코드다" -->
+					${member.id}는 성인입니다.
+				</c:if>
+				<c:if test="${member.age <= 19}">
+					${member.id}는 미성년자입니다.
+				</c:if>
+			</div>
+			
+			<h1>반복문</h1>
+			<div><!-- 자바코드 -->
+				<%
+					for(String n : arr) {
+				%>
+						<%=n%>
+				<%
+					}
+				%>
+				<br>
+				<%
+					for(Member mb : list) {
+				%>
+						<%=mb.getId()%>
+				<%
+					}
+				%>
+				<br>
+				<%
+					for(int i=1; i<=10; i++) {
+				%>
+						<%=i%>
+				<%
+					}
+				%>
+			</div>
+			<h1>반복문(JSTL)</h1>
+			<div>
+				<c:forEach var="n2" items="${arr}">
+					${n2}
+				</c:forEach>
+			</div>
+			<div>
+				<c:forEach var="mb2" items="${list}">
+					${mb2.id}
+				</c:forEach>
+			</div>
+			<div>
+				<c:forEach var="x" begin="1" end="10" step="1">
+					${x}
+				</c:forEach>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
